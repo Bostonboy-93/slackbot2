@@ -2,19 +2,19 @@ const Slackbot = require('slackbots');
 const axios = require('axios');
 
 const bot = new Slackbot({
-    token: 'xoxb-580618039601-590779891974-k5Cqnqf63r4KpP4EBD9J5eY9',
+    token: 'xoxb-580618039601-590779891974-KvZA4oNw9KOBYcQ95XkSXZNU',
     name: 'portbot'
 });
 
 // Start Handler
 bot.on('start', () => {
    const params = {
-    icon_emoji: ':taco_bell:'
+    icon_emoji: ':smiling:'
    };
 
    bot.postMessageToChannel(
        'portbot',
-       'Check portability with @portbot!',
+       'Check flowroute with @portbot!',
        params
    );
 });
@@ -24,7 +24,7 @@ bot.on('error', (err) => console.log(err));
 
 // Message Handler
 bot.on('message', data => {
-    if (data.type !== 'message') {
+    if (data.type !== 'message' || data.subtype === 'bot_message') {
         return; 
     }
 
@@ -33,17 +33,16 @@ bot.on('message', data => {
 
 // Response to Data
 function handleMessage(message) {
-    if(message.includes(' portability')) {
+    if(message.includes('portability')) {
         portcheck();
     }
-    else if(message.includes(' portable')) {
+    else if(message.includes('portable')) {
         portcheck();
     }
-    else {
-        notvalid()
+    else{
+         notvalid();     
     }
-}
-
+};
 // Portability Responses
 function portcheck() {
     axios.get('http://api.yomomma.info')
@@ -51,7 +50,7 @@ function portcheck() {
       const joke = res.data.joke;
       
       const params = {
-        icon_emoji: ':laughing:'
+        icon_emoji: ':tada:'
        };
     
        bot.postMessageToChannel(
@@ -60,17 +59,18 @@ function portcheck() {
     });
 }
 
-// If not valid message
+//If not valid message
 function notvalid() {
-    const params = {
-        icon_emoji: ':facepalm:'
+    const noParam = {
+        icon_emoji: ':laughing:'
        };
     
        bot.postMessageToChannel(
            'portbot',
-           'I am not sure what you want me to do?', 
-           params
+           'What would you like me to do?' ,
+           noParam,
          );
+         
 
 };
 
