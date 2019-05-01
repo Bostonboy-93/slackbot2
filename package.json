@@ -1,16 +1,19 @@
 {
   "name": "portbot-project",
   "version": "1.0.0",
-  "description": "Slackbot that check portability",
+  "description": "Slackbot that checks portability",
   "main": "index.js",
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv": "^7.0.0",
     "slackbot": "^0.0.2",
     "slackbots": "^1.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  },
   "scripts": {
-    "start": "node index.js"
+    "start:dev": "nodemon index.js"
   },
   "author": "Matt Jensen and Nicole Frisbee",
   "license": "MIT"
