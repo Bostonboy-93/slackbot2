@@ -15,7 +15,7 @@ bot.on('start', () => {
 
    bot.postMessageToChannel(
        'portbot',
-       'Check flowroute with @portbot by sending a 10 digit number',
+       'Check flowroute with @portbot by sending a 10 digit number, or multiple if separated by a comma',
        params
    );
 });
@@ -67,7 +67,7 @@ function portcheck(numberTexts) {
 
         bot.postMessageToChannel(
             'portbot',
-            `Umm.... you didn't give me a valid number.  I accept comma separated, 10 digit numbers`);
+            `Umm.... you didn't give me a valid number.  I accept 10 digit numbers`);
         return
     }
 
