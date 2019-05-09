@@ -13,7 +13,8 @@
     "nodemon": "^1.19.0"
   },
   "scripts": {
-    "start:dev": "nodemon index.js"
+    "start:dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "author": "Matt Jensen and Nicole Frisbee",
   "license": "MIT"

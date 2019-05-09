@@ -3,7 +3,7 @@ const axios = require('axios');
 require('dotenv').config()
 const url = `https://api.flowroute.com/v2/portorders/portability`;
 const bot = new Slackbot({
-    token: process.env.Slack_Token,
+    token: process.env.SLACK_BOT_TOKEN,
     name: 'portbot'
 });
 
@@ -118,17 +118,17 @@ function portcheck(numberTexts) {
 };
 
 //If not valid message
-function notvalid() {
-    const noParam = {
-        icon_emoji: ':laughing:'
-       };
+// function notvalid() {
+//     const noParam = {
+//         icon_emoji: ':laughing:'
+//        };
     
-       bot.postMessageToChannel(
-           'portbot',
-           'What would you like me to do? Give me a 10 digit number to check portability.' ,
-           noParam,
-         );
-};
+//        bot.postMessageToChannel(
+//            'portbot',
+//            'What would you like me to do? Give me a 10 digit number to check portability.' ,
+//            noParam,
+//          );
+// };
 
 //Axios 
 // axios({
