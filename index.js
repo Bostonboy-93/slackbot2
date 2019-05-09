@@ -3,7 +3,7 @@ const axios = require('axios');
 require('dotenv').config()
 const url = `https://api.flowroute.com/v2/portorders/portability`;
 const bot = new Slackbot({
-    token: 'xoxb-580618039601-590779891974-7G5ZFm58X4rVSt1nBCsR65u9',
+    token: process.env.Slack_Token,
     name: 'portbot'
 });
 
