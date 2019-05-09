@@ -13,11 +13,11 @@ bot.on('start', () => {
     icon_emoji: ':smiling:'
    };
 
-//    bot.postMessageToChannel(
-//        'portbot',
-//        'Check flowroute with @portbot by sending a 10 digit number',
-//        params
-//    );
+   bot.postMessageToChannel(
+       'portbot',
+       'Check flowroute with @portbot by sending a 10 digit number',
+       params
+   );
 });
 
 // Error Handler
@@ -29,29 +29,52 @@ bot.on('message', data => {
         return; 
     }
 
-    portcheck(data.text);
+    const numbers = data.text.split(',');
+
+    portcheck(numbers);
 });
 
-const pattern = /(?<!\d)\d{10}(?!\d)/g
+function cleanNumberText(numText) {
+    return numText.replace(/\D+/, '')
+}
 
-// const numClean = message.replace(/\D/g, ' ');
-// console.log(message)
+function validateNumberText(numText) {
+    return numText.length === 10
+}
 
-// const message = message.split(' ');
+// Portability Responses:
+// Takes in an Array of texts, each being a phone number in text form
+function portcheck(numberTexts) {
+    console.log("START OF PORTCHECK: " + numberTexts)
 
-// Portability Responses
-function portcheck(message) {
-    if (pattern.test(message) === false) {
+    cleanedNumberTexts = numberTexts.map(cleanNumberText);
+    console.log("CLEANED: " + cleanedNumberTexts)
+
+    const validNumberTexts = [];
+    const invalidNumberTexts = [];
+
+    cleanedNumberTexts.forEach(num => {
+        if (validateNumberText(num)) {
+            validNumberTexts.push(num);
+        } else {
+            invalidNumberTexts.push(num);
+        }
+    })
+
+    console.log("VALIDATED: " + validNumberTexts)
+
+    if (validNumberTexts.length == 0) {
+
         bot.postMessageToChannel(
             'portbot',
-            `Umm.... you didn't give me a 10 digit number`);
+            `Umm.... you didn't give me a valid number.  I accept comma separated, 10 digit numbers`);
         return
     }
 
-    const numbers = message.match(pattern)
-        .map(number => "+1" + number) 
-    
-    axios({
+    const numbers = validNumberTexts
+        .map(number => "+1" + number)     
+       
+    return axios({
         method: 'post',
         url,
         auth: {
@@ -66,19 +89,25 @@ function portcheck(message) {
         }
     })
     .then(res => {
-        console.log(res.data)
-      const portable = res.data.data.portable;
+    console.log(res.data)
+      const flowrouteResponse = res.data.data;
       
       const params = {
         icon_emoji: ':tada:'
        };
-       let response;
-       if  (portable.length === 0)  {
-           response = `I'm sorry this is not portable`;
+       let response = '';
+       if  (flowrouteResponse.portable.length === 0)  {
+           response += `There were no portable numbers provided`;
        }
        else {
-        response = `These numbers are portable: ${portable}`
+        response += `These numbers are portable: ${flowrouteResponse.portable}`
        }
+       response += `\nThese numbers are not portable: ${flowrouteResponse.nonportable}`
+
+       if (invalidNumberTexts.length !== 0) {
+        response += `\n These numbers were not in a valid format: ${invalidNumberTexts}`
+       }
+
        bot.postMessageToChannel(
            'portbot',
            response, params);
@@ -99,8 +128,6 @@ function notvalid() {
            'What would you like me to do? Give me a 10 digit number to check portability.' ,
            noParam,
          );
-         
-
 };
 
 //Axios 
@@ -112,3 +139,5 @@ function notvalid() {
 //       password: 'KVVWeZPf9YkbrPcp15gutZmAM9JD0d0o'
 //     }
 //   });
+
+// portcheck(['12345ABC67890', '3852196797'])

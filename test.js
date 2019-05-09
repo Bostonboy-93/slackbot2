@@ -52,14 +52,15 @@ function process(text) {
     });
 
 
-    let validNumbers = [];
-    cleanedNumbers.forEach(num => {
-        console.log('Clean For Loop: ', num)
-        let isValid = validateNumberText(num)
-        if (isValid) {
-            validNumbers.push(num)
-        }
-    })
+    // let validNumbers = [];
+    // cleanedNumbers.forEach(num => {
+    //     console.log('Clean For Loop: ', num)
+    //     let isValid = validateNumberText(num)
+    //     if (isValid) {
+    //         validNumbers.push(num)
+    //     }
+    // })
+    let validNumbers = cleanedNumbers.filter(validateNumberText)
 
     console.log(validNumbers);
 
