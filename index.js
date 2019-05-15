@@ -28,14 +28,14 @@ bot.on('message', data => {
     if (data.type !== 'message' || data.subtype === 'bot_message') {
         return; 
     }
-
+    console.log(data)
     const numbers = data.text.split(',');
 
     portcheck(numbers);
 });
 
 function cleanNumberText(numText) {
-    return numText.replace(/\D+/, '')
+    return numText.replace(/\D/g, '')
 }
 
 function validateNumberText(numText) {
@@ -67,7 +67,7 @@ function portcheck(numberTexts) {
 
         bot.postMessageToChannel(
             'portbot',
-            `Umm.... you didn't give me a valid number.  I accept 10 digit numbers`);
+            `Umm.... you didn't give me a valid number.  I accept only 10 digit numbers`);
         return
     }
 
@@ -102,7 +102,13 @@ function portcheck(numberTexts) {
        else {
         response += `These numbers are portable: ${flowrouteResponse.portable}`
        }
+
+       if (flowrouteResponse.nonportable.length === 0)  {
+           response += ``;
+       }
+       else {
        response += `\nThese numbers are not portable: ${flowrouteResponse.nonportable}`
+       }
 
        if (invalidNumberTexts.length !== 0) {
         response += `\n These numbers were not in a valid format: ${invalidNumberTexts}`
