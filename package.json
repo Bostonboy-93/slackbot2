@@ -16,6 +16,6 @@
     "start:dev": "nodemon index.js",
     "start": "node index.js"
   },
-  "author": "Matt Jensen and Nicole Frisbee",
+  "author": "Matt Jensen",
   "license": "MIT"
 }

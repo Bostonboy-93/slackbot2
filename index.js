@@ -15,7 +15,7 @@ bot.on('start', () => {
 
    bot.postMessageToChannel(
        'portbot',
-       'Check flowroute with @portbot by sending a 10 digit number, or multiple if separated by a comma',
+       'Check flowroute with @portbot by sending 1 or more 10 digit numbers, separated by a comma',
        params
    );
 });
