@@ -4,7 +4,7 @@
   "description": "Slackbot that checks portability",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "dotenv": "^7.0.0",
     "lodash": "^4.17.14",
     "slackbot": "^0.0.2",
